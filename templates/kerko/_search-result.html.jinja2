@@ -11,7 +11,7 @@
     {%- else -%}
         {%- block search_item_display %}
             <div class="d-flex">
-                <a class="{% block search_item_classes %}d-block mw-100 mr-auto{% endblock %}" href="{{ result_url }}" title="{{ _('View details') }}">
+                <a class="{% block search_item_classes %}d-block mw-100 mr-auto{% endblock %}" href="{{ result_url }}" title="{{ _('Voir les details') }}">
                     {{- badges(result, mode='result') -}}
                     {%- block search_item_formatted_display %}
                         {{- result.bib|safe -}}
@@ -43,7 +43,7 @@
                         {%- block search_result_link_multiple_attachments %}
                             <div class="dropdown">
                                 <button class="{% block search_item_attachments_btn_classes %}btn btn-sm btn-link dropdown-toggle text-nowrap{% endblock %}" type="button" id="attachment-options-{{ result.id|escape }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="fas fa-file mr-1" aria-hidden="true"></span>{{ _('Read documents') -}}
+                                    <span class="fas fa-file mr-1" aria-hidden="true"></span>{{ _('Lire les documents') -}}
                                 </button>
                                 <span class="dropdown-menu dropdown-menu-right dropdown-width-300" aria-labelledby="attachment-options-{{ result.id|escape }}">
                                     {%- for attachment in result.attachments %}
@@ -56,14 +56,14 @@
                         {%- endblock search_result_link_multiple_attachments %}
                     {%- elif config.kerko.features.results_attachment_links and result.attachments|length == 1 %}
                         {%- block search_result_link_single_attachment %}
-                            <a class="{% block search_item_attachment_btn_classes %}btn btn-sm btn-link text-nowrap{% endblock %}" href="{{ url_for('kerko.child_attachment_download', item_id=result.id, attachment_id=result.attachments[0]['id'], attachment_filename=result.attachments[0]['data']['filename']) }}"{% if config.kerko.features.download_attachment_new_window %} target="_blank" rel="noopener"{% endif %} {{ title_aria_label(_('Read \'{}\'').format(result.attachments[0]['data']['filename']|escape)) }}>
+                            <a class="{% block search_item_attachment_btn_classes %}btn btn-sm btn-link text-nowrap{% endblock %}" href="{{ url_for('kerko.child_attachment_download', item_id=result.id, attachment_id=result.attachments[0]['id'], attachment_filename=result.attachments[0]['data']['filename']) }}"{% if config.kerko.features.download_attachment_new_window %} target="_blank" rel="noopener"{% endif %} {{ title_aria_label(_('Lire \'{}\'').format(result.attachments[0]['data']['filename']|escape)) }}>
                                 <span class="fas fa-file mr-1" aria-hidden="true"></span>{{ _('Read document') -}}
                             </a>
                         {%- endblock search_result_link_single_attachment %}
                     {%- elif config.kerko.features.results_url_links and result.url|kerko_url_hostname %}
                         {%- block search_result_link_url %}
                             <a class="{% block search_item_link_btn_classes %}btn btn-sm btn-link text-nowrap{% endblock %}" href="{{ result.url|kerko_url_sanitize|escape }}" target="_blank" rel="noopener noreferrer">
-                                <span class="fas fa-external-link-alt mr-1" aria-hidden="true"></span>{{ _('View on {}').format(result.url|kerko_url_hostname|escape) -}}
+                                <span class="fas fa-external-link-alt mr-1" aria-hidden="true"></span>{{ _('Voir en {}').format(result.url|kerko_url_hostname|escape) -}}
                             </a>
                         {%- endblock search_result_link_url %}
                     {%- endif %}

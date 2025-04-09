@@ -59,8 +59,16 @@
             {%- endblock header_inner %}
         </header>
     {%- endblock header %}
+<section class="hero-banner" style="background-image:url('{{url_for('static', filename='kerko/images/background.jpg')}}')">
+  <div class="overlay"></div>
+  <div class="hero-content">
+    <h1 class="fw-bold">Bienvenue sur notre bibliothèque</h1>
+    <p>Explorez notre univers</p>
+  </div>
+</section>
+
     {%- block main %}
-        <main {% block main_attributes %}class="container"{% endblock %}>
+        <main {% block main_attributes %}class="container mt-5"{% endblock %}>
 {#
 {%- block breadcrumb %}
     <div class="breadcrumb-container">
@@ -68,30 +76,14 @@
     </div>
 {%- endblock breadcrumb %}
 #}
-        <div class="banner">
-            <h1><span class="typing">Bienvenue sur mon site Flask</span></h1>
-             </div>
             {%- block main_inner %}
                 <div {% block main_inner_attributes %}class="row"{% endblock %}>
-                    {%- block content %}
-                        <div {% block content_attributes %}class="col-12 {% if self.sidebar_inner() %}col-lg-8 order-lg-4{% endif %}"
-{% endblock %}>
-                            {%- block content_header %}
-                                <div class="row" style="background:#37517ef6">
-                                    <div class="col">
-                                        <h1 class="fw-bold fs-12px {% block content_heading_classes %}h2 my-2{% endblock %}">{{ title|escape }}</h1>
-                                    </div>
-                                </div>
-                            {%- endblock content_header %}
-                            {%- block messages %}
-                                {%- with messages = get_flashed_messages(with_categories=true) %}
-                                    {%- for category, message in messages %}
-                                        <div class="alert alert-{{ category }}">
-                                            <a class="close" {{ title_aria_label(_('Remove this message')) }} href="#" data-dismiss="alert">&times;</a>
-                                            {{ message }}
-                                        </div>
-                                    {%- endfor %}
-                                {%- endwith %}
+ 
+                   {%- block content %}
+			<div {% block content_attributes %}class="col-12 col-lg-8 order-lg-2" style="margin-left:80px;"{% endblock %}>
+			 
+                        {%- block messages %}
+           
                             {%- endblock messages %}
                             {%- block content_inner %}
                             {%- endblock content_inner %}
@@ -99,9 +91,21 @@
                             {%- endblock content_footer %}
                         </div>
                     {%- endblock content %}
-                    {%- block sidebar %}
+
+			{%- block sidebar %}
+
                         {%- if self.sidebar_inner() %}
-                            <div {% block sidebar_attributes %}class="col-12 col-lg-4 order-lg-1"{% endblock %}>
+                            <div {% block sidebar_attributes %}class="col-12 col-lg-3 order-lg-1 shadow-box"{% endblock %}>
+ {%- with messages = get_flashed_messages(with_categories=true) %}
+                                    {%- for category, message in messages %}
+                                      <div class="alert alert-{{ category }}"   
+    <a class="close" {{ title_aria_label(_('Supprimer ce message')) }} href="#"
+ data-dismiss="alert">&times;</a>
+                                            {{ message }}
+                                        </div>
+                                    {%- endfor %}
+                                {%- endwith %}
+
                                 {%- block sidebar_inner %}
                                 {%- endblock sidebar_inner %}
                             </div>
