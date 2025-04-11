@@ -12,7 +12,7 @@
                     heading_class='col-md-4 col-xl-3 font-weight-bold break-word text-md-right text-print-left',
                     body_class='col-md-8 col-xl-9',
                     list_class_top='list-unstyled mb-0',
-                    remove_title=_("Rétiré le '{}' therme de recherche")
+                    remove_title=_("Remove the '{}' search term")
                 )
             }}
         {%- endfor %}
@@ -25,8 +25,9 @@
 {%- elif is_searching %}
     <div class="row">
         <div class="col">
-            {{ _("Aucun de vos critères de recherche n'a pu être reconnu..") }}
-            <a href="{{ url_for('kerko.search') }}">{{ _("Réinitialiser la recherche") }}</a>.
+            {{ _("None of your search criteria could be recognized.") }}
+            <a href="{{ url_for('kerko.search') }}">{{ _("Reset search") }}</a>.
         </div>
     </div>
 {%- endif %}
+

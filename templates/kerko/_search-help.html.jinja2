@@ -1,3 +1,93 @@
+{#
+
+
+{%- from "kerko/_attributes.html.jinja2" import title_aria_label %}
+
+<div class="modal fade" id="search-help" tabindex="-1" role="dialog" aria-labelledby="search-help-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                {%- block search_help_header %}
+                    <h2 class="modal-title" id="search-help-label">{{ _("Aide") }}</h2>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" {{ title_aria_label(_('Fermer le panneau d'aide')) }}>
+                        <span class="fas fa-times" aria-hidden="true"></span>
+                    </button>
+                {%- endblock search_help_header %}
+            </div>
+            <div class="modal-body">
+                {%- block search_help_inner %}
+                    <p>{{ _("L'interface de recherche est composée de trois sections: <strong>{}</strong>, <strong>{}</strong>, et <strong>{}</strong>. Ceux-ci sont décrits en détail ci-dessous.").format(_("Recherche"), _("Explorer"), _("Resultats")) }}</p>
+                    <p>{{ _("Vous pouvez commencer la recherche soit à partir de la <strong>{}</strong> section, soit à partir de la<strong>{}</strong> section.").format(_("Recherche"), _("Explorer")) }}</p>
+                    <h3>{{ _("Recherche") }}</h3>
+                    <p>{{ _("Cette section affiche vos critères de recherche actuels et vous permet de soumettre des mots-clés à rechercher dans la bibliographie.") }}</p>
+                    <ul>
+                        <li>{{ _("Chaque nouvelle soumission ajoute les mots-clés saisis à la liste des critères de recherche.") }}</li>
+                        <li>{{ _("Pour démarrer une nouvelle recherche au lieu d'ajouter des mots-clés à la recherche actuelle, utilisez le <strong>{}</strong> bouton , puis saisissez vos nouveaux mots-clés.").format(_("Réinitialiser la recherche")) }}</li>
+                        <li>{{ _("Pour remplacer un mot-clé déjà soumis, supprimez-le d'abord en décochant sa case, puis soumettez un nouveau mot-clé.") }}</li>
+                        {%- if config.kerko_composer.scopes|length %}
+                            <li>{{ _("vous pouvez contrôler l'étendue de votre recherche en sélectionnant l'emplacement souhaité. Les options sont les suivantes :") }}
+                                <ul>
+                                    {%- for scope in config.kerko_composer.scopes.values() %}
+                                        {%- if scope.help_text %}
+                                            <li><strong>{{ scope.selector_label }}</strong>{{ _(": ") }}{{ scope.help_text }}</li>
+                                        {%- endif %}
+                                    {%- endfor %}
+                                </ul>
+                            </li>
+                        {%- endif %}
+                        <li>{{ _("Vous pouvez utiliser des opérateurs booléens avec votre mots-clés. Par exemple :") }}
+                            <ul>
+                                <li>{{ _("<strong>{and_op}</strong>: Recherche les entrées qui contiennent tous les termes spécifiés. Il s'agit de la relation par défaut entre les termes lorsqu'aucun opérateur n'est spécifié, par exemple, <code>a b</code> est identique à<code>a {and_op} b</code>.").format(and_op=_("AND")) }}</li>
+                                <li>{{ _("<strong>{or_op}</strong>: Recherche les entrées qui contiennent l'un des termes spécifiés, par exemple, <code>a {or_op} b</code>.").format(or_op=_("OR")) }}</li>
+                                <li>{{ _("<strong>{not_op}</strong>: Exclut les entrées qui contiennent les termes spécifiés, par exemple, <code>{not_op} a</code>.").format(not_op=_("NOT")) }}</li>
+                                <li>{{ _("Les opérateurs booléens doivent être saisis en MAJUSCULES.") }}</li>
+                            </ul>
+                        </li>
+                        <li>{{ _("Vous pouvez utiliser des regroupements logiques (entre paranthèses) pour éliminer les ambiguïtés lors de l'utilisation de plusieurs opérateurs booléens, par exemple,<code>(a {or_op} b) {and_op} c</code>.").format(and_op=_("AND"), or_op=_("OR")) }}</li>
+                        <li>{{ _('Vous pourriez avoir besoin de séquences exactes de mots (entre double quotes), par exemple, <code>"a b c"</code>. La différence par défaut entre les positions des mots est de 1, ce qui signifie qu'une entrée correspondra si elle contient les mots les uns à côté des autres, mais une distance maximale différente peut être spécifiée (with the tilde character), par exemple, <code>"recherche sur le Web"~2</code> permet jusqu'à 1 mot entre <code>web</code> et<code>recherche</code>, ce qui signifie que cela pourrait correspondre <code>recherhce sur le web</code> ainsi que <code>recherche sur le web</code>.') }}</li>
+                        <li>{{ _("Vous pouvez préciser que certains mots sont plus importants que d’autres (avec le signe d'insertion), per exemple, <code>facetté^2 recherche navigation^0.5</code>précise que <code>à facettes</code> est deux fois plus important que <code>recherche</code>lors du calcul du score de pertinence des résultats, tandis que <code>navigation</code> est deux fois moins importante. Un tel renforcement des termes peut être appliqué à un groupement logique, par exemple, <code>(a b)^3 c</code>.") }}</li>
+                        <li>{{ _("La recherche par mot-clé n'est pas sensible à la casse, les accents sont pliés et la ponctuation est ignorée.") }}</li>
+                        <li>{{ _("La recherche de racines est effectuée sur les termes de la plupart des champs de texte, par exemple, titre, abstraire, notes. Les mots sont ainsi réduits à leur forme racine, ce qui vous évite d'avoir à spécifier toutes les variantes d'un mot lors de la recherche, par exemple, des termes tels que <code>recherche</code>, <code>recherches</code>, et <code>recherche</code> tous produisent le même résultat.La dérivation n'est <em>pas</em> appliquée au texte dans les champs de nom,par exemple, auteurs/contributeurs, éditeur, publication.") }}</li>
+                    </ul>
+                    <h3>{{ _("Explorer") }}</h3>
+                    <p>{{ _("Cette section vous permet d'explorer les catégories associées aux références.") }}</p>
+                    <ul>
+                        <li>{{ _("Les catégories peuvent être utilisées pour filtrer votre recherche.Cochez une catégorie pour l'ajouter à vos critères de recherche et affinez votre recherche.Vos résultats de recherche afficheront alors uniquement les entrées associées à cette catégorie.") }}</li>
+                        <li>{{ _("décochez une catégorie pour la supprimer de vos critères de recherche et élargir vos résultats de recherche.") }}</li>
+                        <li>{{ _("Les nombres affichés à côté des catégories indiquent le nombre d'entrées associées à chaque catégorie dans l'ensemble de résultats actuel. Ces nombres varient en fonction de vos critères de recherche afin de toujours décrire l'ensemble de résultats actuel. De même, les catégories et les facettes entières disparaissent lorsqu'aucune entrée n'est associée à l'ensemble de résultats..") }}</li>
+                        <li>{{ _("Une flèche ({}) apparaissant à côté d'une catégorie indique que des sous-catégories sont disponibles. Appuyez dessus pour développer une liste de catégories plus spécifiques. Appuyez à nouveau ultérieurement pour réduire la liste. Développer ou réduire les sous-catégories ne modifie pas votre recherche actuelle ; cela vous permet d'explorer rapidement une hiérarchie de catégories si vous le souhaitez.").format('<span class="fas fa-chevron-right" aria-hidden="true"></span>') }}</li>
+                    </ul>
+                    <h3>{{ _("Resultats") }}</h3>
+                    <p>{{ _("Cette section affiche les résultats de la recherche. Lorsqu'aucun critère de recherche n'est renseigné, elle affiche le contenu complet de la bibliographie (jusqu'à {page_len} entrées par page).").format(page_len=config.kerko.pagination.page_len) }}</p>
+                    <ul>
+                        <li>{{ _("Chaque entrée de la liste de résultats comporte un lien vers sa notice bibliographique complète. Depuis la vue de la notice bibliographique, vous pouvez poursuivre l'exploration des résultats de recherche en accédant aux notices précédentes ou suivantes, ou en revenant à la liste des résultats.") }}</li>
+                        <li>{{ _("Liens supplémentaires, tels que <strong>Lire le document</strong>ou <strong>Voir sur <em>[website name]</em></strong>,peut apparaître sous.Ces liens vous permettent d'accéder rapidement à la ressource. Ils seront également disponibles dans la notice bibliographique complète.") }}</li>
+                        {%- if config.kerko.features.results_abstracts_toggler %}
+                            <li>{{- _("L'<strong>Abstraires</strong> button lets you toggle the display of abstracts within the list of search results. Enabling abstracts, however, will have no effect on results for which no abstract is available.") }}
+                        {%- endif %}
+                        {%- if config.kerko_composer.sorts|length %}
+                            <li>{{ _("Plusieurs options vous permettent de trier les résultats de recherche. L'une d'elles est l'option <strong>Pertinence</strong>, qui classe les résultats du plus pertinent au moins pertinent. Le score utilisé pour le classement prend en compte la fréquence des mots ainsi que les champs où ils apparaissent. Par exemple, si un terme de recherche apparaît fréquemment dans une entrée ou fait partie des rares termes utilisés dans cette entrée, cette entrée sera probablement mieux classée qu'une autre où il apparaît moins fréquemment ou où de nombreux autres mots apparaissent également. De même, un terme de recherche aura plus d'impact sur les scores s'il est rare dans la bibliographie que s'il est très courant. De plus, si un terme de recherche apparaît, par exemple, dans le titre d'une entrée, il aura plus d'impact sur le score de cette entrée que s'il apparaît dans un champ moins important comme le résumé.") }}</li>
+                            <li>{{ _("La <strong>Pertinence</string>le tri par pertinence n'est disponible qu'après la soumission des mots-clés à l'aide de la <strong>{recherche}</strong> section.").format(search=_("Search")) }}</li>
+                            <li>{{ _("Les catégories sélectionnées dans la <strong>{explorer}</strong> section n'ont aucun effet sur le score de pertinence. Leur seul effet est de filtrer la liste des résultats.").format(explore=_("Explore")) }}</li>
+                        {%- endif %}
+                    </ul>
+                {%- endblock search_help_inner %}
+                {%- block search_help_inner_end %}
+                    <div class="my-3 text-right">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="{{ _('Fermer le panneau d'aide') }}">{{ _("Fermer") }}</button>
+                    </div>
+                {%- endblock search_help_inner_end %}
+            </div>
+        </div>
+    </div>
+</div>
+
+#}
+
+
+
+
+
 {%- from "kerko/_attributes.html.jinja2" import title_aria_label %}
 
 <div class="modal fade" id="search-help" tabindex="-1" role="dialog" aria-labelledby="search-help-label" aria-hidden="true">
@@ -78,3 +168,4 @@
         </div>
     </div>
 </div>
+

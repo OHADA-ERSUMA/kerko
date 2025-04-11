@@ -6,7 +6,7 @@
             <div class="modal-header">
                 {%- block preferences_modal_header %}
                     <h2 class="modal-title" id="preferences-modal-label">{{ _("Preferences") }}</h2>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" {{ title_aria_label(_('Close preferences')) }}>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" {{ title_aria_label(_('Fermer preferences')) }}>
                         <span class="fas fa-times" aria-hidden="true"></span>
                     </button>
                 {%- endblock preferences_modal_header %}
@@ -19,9 +19,9 @@
                                 <button id="open-in-zotero-app-toggle" class="btn btn-toggle pl-0" data-toggle="button" {% if open_in_zotero_app %}active{% endif %} aria-pressed="{% if open_in_zotero_app %}true{% else %}false{% endif %}" aria-describedby="open-in-zotero-app-toggle-help">
                                     <span class="btn-toggle-icon-off fas fa-toggle-off" aria-hidden="true"></span>
                                     <span class="btn-toggle-icon-on fas fa-toggle-on" aria-hidden="true"></span>
-                                    {{ _('"{}" button').format(_("Open in Zotero")) }}
+                                    {{ _('"{}" button').format(_("Ouvrir dans Zotero")) }}
                                 </button>
-                                <small id="open-in-zotero-app-toggle-help" class="form-text text-muted">{{ _('Show or hide the "{}" button on full bibliographic record pages. This button allows you to open the record in the Zotero application. It might be useful only if you have the Zotero application installed on your device, and if you were granted access to the Zotero library that holds the record.').format(_("Open in Zotero")) }}</small>
+                                <small id="open-in-zotero-app-toggle-help" class="form-text text-muted">{{ _('Afficher ou masquer le bouton sur "{}" les pages complètes des notices bibliographiques. Ce bouton vous permet d'ouvrir la notice dans l'application Zotero. Il peut être utile uniquement si l'application Zotero est installée sur votre appareil et si vous disposez d'un accès à la bibliothèque Zotero contenant la notice.').format(_("Ouvrir dans Zotero")) }}</small>
                             </div>
                         {%- endif %}
                         {%- if config.kerko.features.open_in_zotero_web %}
@@ -29,16 +29,16 @@
                                 <button id="open-in-zotero-web-toggle" class="btn btn-toggle pl-0" data-toggle="button" {% if open_in_zotero_web %}active{% endif %} aria-pressed="{% if open_in_zotero_web %}true{% else %}false{% endif %}" aria-describedby="open-in-zotero-web-toggle-help">
                                     <span class="btn-toggle-icon-off fas fa-toggle-off" aria-hidden="true"></span>
                                     <span class="btn-toggle-icon-on fas fa-toggle-on" aria-hidden="true"></span>
-                                    {{ _('"{}" button').format(_("View on zotero.org")) }}
+                                    {{ _('"{}" button').format(_("Voir sur zotero.org")) }}
                                 </button>
-                                <small id="open-in-zotero-web-toggle-help" class="form-text text-muted">{{ _('Show or hide the "{}" button on full bibliographic record pages. This button allows you to view the record on zotero.org. It might be useful only if you were granted access to the Zotero library that holds the record.').format(_("View on zotero.org")) }}</small>
+                                <small id="open-in-zotero-web-toggle-help" class="form-text text-muted">{{ _('Afficher ou masquer le "{}" le bouton sur les pages complètes des notices bibliographiques. Ce bouton permet de visualiser l'enregistrement sur zotero.org. Il peut être utile uniquement si vous avez obtenu l'accès à la bibliothèque Zotero qui détient l'enregistrement.').format(_("Voir sur zotero.org")) }}</small>
                             </div>
                         {%- endif %}
                     {%- endblock preferences_open_in_zotero %}
                 {%- endblock preferences_modal_inner %}
                 {%- block preferences_modal_footer %}
                     <div class="my-3 text-right">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="{{ _('Close preferences') }}">{{ _("Close") }}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="{{ _('Fermer preferences') }}">{{ _("Fermer") }}</button>
                     </div>
                 {%- endblock preferences_modal_footer %}
             </div>

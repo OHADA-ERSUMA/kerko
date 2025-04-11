@@ -86,13 +86,7 @@ main {
   padding-bottom: 3rem;
 font-family:"Montserrat", sans-serif;
 }
-.breadcrumb-container {
-    background-color:#37517fe7;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 30px;
-    font-weight: bold;
-}
+
 .alert{
 background-color:red;
 }
@@ -165,20 +159,16 @@ background-color:red;
   padding: 1rem;
 }
 
-/*
-
-@keyframes typing {
-            from {
-                width: 0;
-            }
-            to {
-                width: 100%;
-            }
-        }
-
-        @keyframes blink {
-            50% {
-                border-color: transparent;
-            }
-        }
-*/
+.card {
+    transition: box-shadow 0.3s ease;
+}
+.card:hover {
+    box-shadow: 0 0 20px rgba(0,3,7,0.1);
+}
+.btn-outline-primary,
+.btn-outline-success,
+.btn-outline-secondary {
+    border-radius: 20px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
