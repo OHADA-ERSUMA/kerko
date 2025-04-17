@@ -1,0 +1,100 @@
+site_name: Kerko
+
+nav:
+  - Introduction: index.md
+  - getting-started.md
+  - synchronization.md
+  - config-basics.md
+  - config-params.md
+  - config-guides.md
+  - troubleshooting.md
+  - localization.md
+  - deploying.md
+  - upgrading.md
+  - changelog.md
+  - contributing.md
+  - about.md
+
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - header.autohide
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.view
+    - content.action.edit
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+    view: material/file-eye-outline
+    edit: material/file-edit-outline
+
+plugins:
+  - search
+
+repo_url: https://github.com/whiskyechobravo/kerko
+repo_name: whiskyechobravo/kerko
+edit_uri: blob/main/docs/
+
+markdown_extensions:
+  # See https://squidfunk.github.io/mkdocs-material/setup/extensions/
+  # Python Markdown
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      title: On this page
+  # Python Markdown Extensions
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      check_paths: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/whiskyechobravo/kerko
+      name: Kerko on GitHub
+  version:
+    provider: mike
+
+copyright: Copyright &copy; <a href="https://whiskyechobravo.com" target="_blank" rel="noopener">Whisky Echo Bravo Services inc.­</a>

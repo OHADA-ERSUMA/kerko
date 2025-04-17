@@ -1,0 +1,47 @@
+{%- from "kerko/_attributes.html.jinja2" import title_aria_label %}
+
+<div class="modal fade" id="preferences-modal" tabindex="-1" role="dialog" aria-labelledby="preferences-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                {%- block preferences_modal_header %}
+                    <h2 class="modal-title" id="preferences-modal-label">{{ _("Preferences") }}</h2>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" {{ title_aria_label(_('Fermer preferences')) }}>
+                        <span class="fas fa-times" aria-hidden="true"></span>
+                    </button>
+                {%- endblock preferences_modal_header %}
+            </div>
+            <div class="modal-body">
+                {%- block preferences_modal_inner %}
+                    {%- block preferences_open_in_zotero %}
+                        {%- if config.kerko.features.open_in_zotero_app %}
+                            <div class="form-group">
+                                <button id="open-in-zotero-app-toggle" class="btn btn-toggle pl-0" data-toggle="button" {% if open_in_zotero_app %}active{% endif %} aria-pressed="{% if open_in_zotero_app %}true{% else %}false{% endif %}" aria-describedby="open-in-zotero-app-toggle-help">
+                                    <span class="btn-toggle-icon-off fas fa-toggle-off" aria-hidden="true"></span>
+                                    <span class="btn-toggle-icon-on fas fa-toggle-on" aria-hidden="true"></span>
+                                    {{ _('"{}" button').format(_("Ouvrir dans Zotero")) }}
+                                </button>
+                                <small id="open-in-zotero-app-toggle-help" class="form-text text-muted">{{ _('Afficher ou masquer le bouton sur "{}" les pages complètes des notices bibliographiques. Ce bouton vous permet d'ouvrir la notice dans l'application Zotero. Il peut être utile uniquement si l'application Zotero est installée sur votre appareil et si vous disposez d'un accès à la bibliothèque Zotero contenant la notice.').format(_("Ouvrir dans Zotero")) }}</small>
+                            </div>
+                        {%- endif %}
+                        {%- if config.kerko.features.open_in_zotero_web %}
+                            <div class="form-group">
+                                <button id="open-in-zotero-web-toggle" class="btn btn-toggle pl-0" data-toggle="button" {% if open_in_zotero_web %}active{% endif %} aria-pressed="{% if open_in_zotero_web %}true{% else %}false{% endif %}" aria-describedby="open-in-zotero-web-toggle-help">
+                                    <span class="btn-toggle-icon-off fas fa-toggle-off" aria-hidden="true"></span>
+                                    <span class="btn-toggle-icon-on fas fa-toggle-on" aria-hidden="true"></span>
+                                    {{ _('"{}" button').format(_("Voir sur zotero.org")) }}
+                                </button>
+                                <small id="open-in-zotero-web-toggle-help" class="form-text text-muted">{{ _('Afficher ou masquer le "{}" le bouton sur les pages complètes des notices bibliographiques. Ce bouton permet de visualiser l'enregistrement sur zotero.org. Il peut être utile uniquement si vous avez obtenu l'accès à la bibliothèque Zotero qui détient l'enregistrement.').format(_("Voir sur zotero.org")) }}</small>
+                            </div>
+                        {%- endif %}
+                    {%- endblock preferences_open_in_zotero %}
+                {%- endblock preferences_modal_inner %}
+                {%- block preferences_modal_footer %}
+                    <div class="my-3 text-right">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="{{ _('Fermer preferences') }}">{{ _("Fermer") }}</button>
+                    </div>
+                {%- endblock preferences_modal_footer %}
+            </div>
+        </div>
+    </div>
+</div>
