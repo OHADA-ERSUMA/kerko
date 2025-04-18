@@ -22,6 +22,14 @@ padding:0%;
   word-wrap: break-word; /* Older, non-standard name for overflow-wrap. */
   overflow-wrap: break-word;
 }
+
+.custom-flash {
+        background-color: #7a1f0d;
+        color: white;
+    }
+    .btn-close-white {
+        filter: invert(1); /* rend la croix blanche */
+    }
 .pre-line {
   white-space: pre-line;
 }

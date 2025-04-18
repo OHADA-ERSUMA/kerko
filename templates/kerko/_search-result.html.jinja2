@@ -8,16 +8,18 @@
 
             {{- badges(result, mode='result') -}}     
        {%- block search_item_formatted_print %}
-<div class="bg-dark" style="color:red;">
 
                 {{- result.bib|safe -}}
-</div>
+
             {%- endblock search_item_formatted_print %}
         {%- endblock search_item_print %}
     {%- else -%}
         {%- block search_item_display %}
             <div class="d-flex">
-                <a class="{% block search_item_classes %}d-block 
+                    {{- badges(result, mode='result') -}}
+<h5 class="fw-bold"> {{- result.bib|safe -}}</h5>
+{#                
+<a class="{% block search_item_classes %}d-block 
 mw-100 mr-auto{% endblock %}" href="{{ result_url }}"
  title="{{ _('Voir les details') }}">
                     {{- badges(result, mode='result') -}}
@@ -25,6 +27,7 @@ mw-100 mr-auto{% endblock %}" href="{{ result_url }}"
                         {{- result.bib|safe -}}
                     {%- endblock search_item_formatted_display %}
                 </a>
+#}
                 {%- if result.coins %}
                     {{- result.coins|safe -}}
                 {%- endif %}

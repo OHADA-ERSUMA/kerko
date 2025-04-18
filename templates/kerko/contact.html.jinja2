@@ -1,0 +1,48 @@
+{% extends config.kerko.templates.layout %}
+
+{% block content %}
+
+<div class="container py-5">
+    <h2 class="mb-4 text-center">Contactez-nous pour plus d'infos</h2>
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show custom-flash" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+      <div class="row align-items-center">
+        
+        <div class="col-md-6 mb-4 mb-md-0">
+            <img src="{{ url_for('static', filename='kerko/images/contact.jpg') }}" alt="Contact" class="img-fluid rounded shadow">
+        </div>
+
+   
+        <div class="col-md-6">
+            <form method="POST" action="{{ url_for('contact') }}">
+                <div class="mb-3">
+                    <label for="nom" class="form-label">Nom</label>
+                    <input type="text" class="form-control" id="nom" name="nom" placeholder="Entrez votre nom complet" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Adresse e-mail</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Entrez votre e-mail" required>
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Envoyer</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
