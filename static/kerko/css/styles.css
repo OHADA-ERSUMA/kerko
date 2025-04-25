@@ -1,7 +1,7 @@
 *{
 margin:0%;
 padding:0%;
-
+text-align: justify !important;
 }
 
 .list-no-bullets {
@@ -164,6 +164,11 @@ background-color:red;
   background-color: #fff;
   border-right: 3px solid #37517e;
   padding: 1rem;
+}
+
+.text-justify{
+/*align-items:justify;*/
+text-align: justify !important;
 }
 
 .card {

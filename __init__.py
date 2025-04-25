@@ -3,9 +3,9 @@ A sample Flask application using the Kerko blueprint.
 """
 
 import os
-
 import kerko
 from flask import Flask, render_template
+from flask_mail import Mail
 from flask_babel import get_locale
 from kerko.config_helpers import config_update, parse_config
 
@@ -13,6 +13,7 @@ from . import logging
 from .config_helpers import KerkoAppModel, load_config_files
 from .extensions import babel, bootstrap
 
+mail = Mail()
 
 def create_app() -> Flask:
     """
@@ -22,9 +23,20 @@ def create_app() -> Flask:
     """
     try:
         app = Flask(__name__, instance_path=os.environ.get("KERKOAPP_INSTANCE_PATH"))
+
     except ValueError as e:
         msg = f"Unable to initialize the application. {e}"
         raise RuntimeError(msg) from e
+
+ # Config SMTP
+    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+    app.config['MAIL_PORT'] = 587
+    app.config['MAIL_USE_TLS'] = True
+    app.config['MAIL_USERNAME'] = 'roukayathfadeyi5@gmail.com'
+    app.config['MAIL_PASSWORD'] = 'yhypkrykgbzdjjvl'
+    app.config['MAIL_DEFAULT_SENDER'] = ('Nom Affiché', 'roukayathfadeyi5@gmail.com')
+
+    mail.init_app(app)
 
     # Initialize app configuration with Kerko's defaults.
     config_update(app.config, kerko.DEFAULTS)
