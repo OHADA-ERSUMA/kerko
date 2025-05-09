@@ -42,16 +42,27 @@
         {%- endif %}
     {%- endblock search_criteria %}
     {%- block search_results %}
+{#
         {%- include "kerko/_pager.html.jinja2" %}
-        <h2 class="{% block item_heading_classes %}my-3 clearfix{% endblock %}">
+  
+#}
+      <h2 class="{% block item_heading_classes %}my-3 clearfix{% endblock %}">
             {{- badges(item, mode='item') -}}
             {{- title|kerko_richtext_escape -}}
         </h2>
     {%- endblock search_results %}
     {{- super() }}
+{#
     {%- include "kerko/_pager.html.jinja2" %}
+#}
+{%- if pager %}
+                        <div class="col-auto mr-auto">
+                            {%- block pager_bottom %}
+                                {%- include "kerko/_pager.html.jinja2" %}
+                            {%- endblock pager_bottom %}
+                        </div>
+                    {%- endif %}
 {%- endblock content_inner %}
-
 {%- block body_scripts %}
     {{ super() }}
     {%- if preferred_url %}

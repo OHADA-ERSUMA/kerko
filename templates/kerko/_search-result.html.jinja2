@@ -4,17 +4,8 @@
 <li class="{% block search_list_item_classes %}search-item break-word my-3{% endblock %}">
 <div class="bow-shadow shadow-sm p-4" style="background-color:#e0f7fa;">
     {%- if print_preview -%}
-        {%- block search_item_print %}
-
-            {{- badges(result, mode='result') -}}     
- 
-      {%- block search_item_formatted_print %}
-
-                {{- result.bib|safe -}}
-
-            {%- endblock search_item_formatted_print %}
-        {%- endblock search_item_print %}
-    {%- else -%}
+   
+ {%- else -%}
         {%- block search_item_display %}
             <div class="d-flex">
                     {{- badges(result, mode='result') -}}
@@ -30,10 +21,9 @@ mw-100 mr-auto{% endblock %}" href="{{ result_url }}" style="color:black;"
 
   
               {%- if result.coins %}
-<div class="bg-dark">
+
                     {{- result.coins|safe -}}
-                {%- endif %}
-</div>     
+                {%- endif %}     
        </div>
         {%- endblock search_item_display %}
     {%- endif -%}
@@ -75,7 +65,7 @@ mw-100 mr-auto{% endblock %}" href="{{ result_url }}" style="color:black;"
                     {%- elif config.kerko.features.results_url_links and result.url|kerko_url_hostname %}
                         {%- block search_result_link_url %}
                             <a class="{% block search_item_link_btn_classes %}btn btn-sm btn-link  text-nowrap{% endblock %}" style="font-size:17px;" href="{{ result.url|kerko_url_sanitize|escape }}" target="_blank" rel="noopener noreferrer">
-                                <span class="fas fa-external-link-alt mr-1" aria-hidden="true"></span>{{ _('Voir en {}').format(result.url|kerko_url_hostname|escape) -}}
+                                <span class="fas fa-external-link-alt mr-1" aria-hidden="true"></span>{{ _('Consulter sur {}').format(result.url|kerko_url_hostname|escape) -}}
                             </a>
                         {%- endblock search_result_link_url %}
                     {%- endif %}

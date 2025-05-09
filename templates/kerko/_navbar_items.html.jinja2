@@ -1,6 +1,6 @@
 {% for item in config.kerko_composer.link_groups.navbar.get_ordered_links() %}
     <li class="nav-item {% if item.is_active(request) %}active{% endif %}">
-        <a class="nav-link text-white" href="{{ item.url }}" {% if item.new_window %}target="_blank" rel="noopener"{% endif %} >Ma bibliographie</a>
+        <a class="nav-link text-white" href="{{ item.url }}" {% if item.new_window %}target="_blank" rel="noopener"{% endif %} >Accueil</a>
     </li>
 {% endfor %}
 
@@ -9,7 +9,7 @@
 
     </li>
    <li class="nav-item">
-        <a class="nav-link text-white" href="/contact">Contact</a>
+        <a class="nav-link text-white" href="/contact">Nous Contactez</a>
 
     </li>
 

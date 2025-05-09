@@ -23,6 +23,8 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/solid.css" integrity="sha384-ioUrHig76ITq4aEJ67dHzTvqjsAP/7IzgwE7lgJcg2r7BRNGYSK0LwSmROzYtgzs" crossorigin="anonymous">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/regular.css" integrity="sha384-hCIN6p9+1T+YkCd3wWjB5yufpReULIPQ21XA/ncf3oZ631q2HEhdC7JgKqbk//4+" crossorigin="anonymous">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/fontawesome.css" integrity="sha384-sri+NftO+0hcisDKgr287Y/1LVnInHJ1l+XC7+FOabmTTIK0HnE2ID+xxvJ21c5J" crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
     {%- endblock fontawesome_css %}
     {%- block kerko_css %}
         <link rel="stylesheet" href="{{ url_for('static', filename='kerko/css/styles.css') }}">
@@ -71,14 +73,7 @@
 
     {%- block main %}
         <main {% block main_attributes %}class="container mt-5"{% endblock %}>
-{#
-{%- block breadcrumb %}
-    <div class="breadcrumb-container">
-        {{ breadcrumb([title]) }}
-    </div>
-{%- endblock breadcrumb %}
 
-  #}
           {%- block main_inner %}
                 <div {% block main_inner_attributes %}class="row"{% endblock %}>
  
@@ -93,7 +88,6 @@
 
                             {%- block content_footer %}
                             {%- endblock content_footer %}
-
 
                      
                         </div>
@@ -123,18 +117,50 @@
             {%- endblock main_inner %}
         </main>
     {%- endblock main %}
-    {%- block footer %}
 
-        <footer {% block footer_attributes %} class="text-white" style="background-color: #37517fe6;" {% endblock %}>
-    {%- block footer_inner %}
-        <div class="container text-center pt-3 pb-3">
-                    {{ _('&copy; 2020-2025 Bibliothèque de {ersuma}. Tous droits réservés').format(
-    ersuma='<a href="http://ersuma.org/" target=_blank  class="text-warning fw-bold">ERSUMA-OHADA</a>') }}
-            
-            </div>
-        
-    {%- endblock footer_inner %}
+    {%- block footer %}
+<footer {% block footer_attributes %} class="text-white pt-5 pb-3" style="background-color: #37517fe6;" {% endblock %}>
+  {%- block footer_inner %}
+  <div class="container">
+    <div class="row">
+
+      <!-- Section : À propos / Mentions -->
+      <div class="col-md-4 mb-4">
+        <h5 class="text-uppercase mb-3">À propos</h5>
+        <p>
+          {{ _('&copy; 2020-2025 Bibliographie sélective de {ersuma}. Tous droits réservés').format(
+            ersuma='<a href="https://www.ohada.org/" target="_blank" class="text-warning fw-bold text-decoration-none">ERSUMA-OHADA</a>') }}
+        </p>
+      </div>
+
+      <!-- Section : Liens utiles -->
+      <div class="col-md-4 mb-4">
+        <h5 class="text-uppercase mb-3">Liens Utiles</h5>
+        <ul class="list-unstyled">
+          <li><a href="https://www.ohada.org/" target="_blank" class="text-white text-decoration-none">OHADA</a></li>
+          <li><a href="https://sigweb.ersuma.org/" target="_blank" class="text-white text-decoration-none">SIGWEB</a></li>
+          <li><a href="https://biblio.ohada.org/" target="_blank" class="text-white text-decoration-none">Bibliothèque Numérique</a></li>
+        </ul>
+      </div>
+
+      <!-- Section Contact rapide-->
+      <div class="col-md-4 mb-4">
+        <h5 class="text-uppercase mb-3">Contact</h5>
+        <p class="mb-1"><i class="bi bi-envelope-fill me-2"></i> ersuma@ohada.org</p>
+        <p><i class="bi bi-geo-alt-fill me-2"></i> Cotonou, Bénin</p>
+      </div>
+
+    </div>
+
+    <hr class="border-light">
+
+    <div class="text-center small">
+      Développée par l’équipe technique de l’ERSUMA &middot; <a href="/politique" class="text-white text-decoration-underline">Politique de confidentialité</a>
+    </div>
+  </div>
+  {%- endblock footer_inner %}
 </footer>
+
 {%- endblock footer %}
 {%- endblock body_inner %}
 

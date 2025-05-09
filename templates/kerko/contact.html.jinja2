@@ -1,48 +1,254 @@
+{# 
 {% extends config.kerko.templates.layout %}
 
 {% block content %}
 
 <div class="container py-5">
-    <h2 class="mb-4 text-center">Contactez-nous pour plus d'infos</h2>
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+ <h2 class="text-center mb-4">Contactez-nous pour plus d'infos</h2>
 
+            <div class="card shadow border-0 rounded-4 p-4">
+<p>Si vous désirez suggérer une référence ou demander une information concernant la bibliographie sélective, veuillez remplir le formulaire de contact ci-dessous en précisant le type de votre requête.
+</p>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible fade show custom-flash" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
-            <div class="alert alert-{{ category }} alert-dismissible fade show custom-flash" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+                <div class="row g-4 align-items-center">
+                    <!-- Image -->
+                    <div class="col-md-6">
+                        <img src="{{ url_for('static', filename='kerko/images/contact.jpg') }}" alt="Contact" class="img-fluid rounded-4 shadow-sm w-100">
+                    </div>
+
+                    <!-- Form -->
+                    <div class="col-md-6">
+                        <form method="POST" action="{{ url_for('contact') }}">
+                            <div class="mb-3">
+                                <label for="nom" class="form-label">Nom</label>
+                                <input type="text" class="form-control" id="nom" name="nom" placeholder="Entrez votre nom complet" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Adresse e-mail</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Entrez votre e-mail" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="type_requete" class="form-label">Type de requête</label>
+                                <select class="form-select shadow-sm rounded-3" id="type_requete" name="type_requete" required>
+                                    <option value="" disabled selected>-- Choisissez une option --</option>
+                                    <option value="info">Demande d'information</option>
+                                    <option value="reference">Ajouter une référence</option>
+                                </select>
+                            </div>
+
+                            <!-- Message Section -->
+                            <div id="message_section" class="mb-3" style="display:none;">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" name="message" rows="5" placeholder="Écrivez votre message..."></textarea>
+                            </div>
+
+                            <!-- Reference Section -->
+                            <div id="reference_section" style="display:none;">
+                                <div class="mb-3">
+                                    <label for="url" class="form-label">URL</label>
+                                    <input type="url" class="form-control" id="url" name="url" placeholder="Lien de la référence">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="auteur" class="form-label">Auteur</label>
+                                    <input type="text" class="form-control" id="auteur" name="auteur" placeholder="Nom de l’auteur">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="annee" class="form-label">Année de publication</label>
+                                    <input type="number" class="form-control" id="annee" name="annee" placeholder="Ex: 2023" min="1500" max="2100">
+                                </div>
+                            </div>
+			<div class="mb-3">
+    				<div class="g-recaptcha" data-sitekey="6LcMnDMrAAAAAJbx22Q8jvgmbOsaVX0CMh4iqLLf" required></div>
+			</div>
+                            <button type="submit" class="btn btn-primary w-100 rounded-pill mt-3">Envoyer</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-        {% endfor %}
-    {% endif %}
-{% endwith %}
-
-      <div class="row align-items-center">
-        
-        <div class="col-md-6 mb-4 mb-md-0">
-            <img src="{{ url_for('static', filename='kerko/images/contact.jpg') }}" alt="Contact" class="img-fluid rounded shadow">
-        </div>
-
-   
-        <div class="col-md-6">
-            <form method="POST" action="{{ url_for('contact') }}">
-                <div class="mb-3">
-                    <label for="nom" class="form-label">Nom</label>
-                    <input type="text" class="form-control" id="nom" name="nom" placeholder="Entrez votre nom complet" required>
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Adresse e-mail</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Entrez votre e-mail" required>
-                </div>
-                <div class="mb-3">
-                    <label for="message" class="form-label">Message</label>
-                    <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Envoyer</button>
-            </form>
         </div>
     </div>
 </div>
 
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<script>
+document.getElementById('type_requete').addEventListener('change', function() {
+    const type = this.value;
+    const messageField = document.getElementById('message');
+    const urlField = document.getElementById('url');
+    const auteurField = document.getElementById('auteur');
+    const anneeField = document.getElementById('annee');
+
+    const messageSection = document.getElementById('message_section');
+    const referenceSection = document.getElementById('reference_section');
+
+
+    messageField.required = false;
+    urlField.required = false;
+    auteurField.required = false;
+    anneeField.required = false;
+    if (type === 'info') {
+        messageSection.style.display = 'block';
+	messageField.required = true;
+        referenceSection.style.display = 'none';
+    } else if (type === 'reference') {
+        messageSection.style.display = 'none';
+        referenceSection.style.display = 'block';
+	urlField.required = true;
+	auteurField.required = true;
+	anneeField.required = true;
+    } else {
+        messageSection.style.display = 'none';
+        referenceSection.style.display = 'none';
+    }
+});
+</script>
+
+</div>
+
+{% endblock %}
+
+#}
+
+
+{% extends config.kerko.templates.layout %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <h2 class="text-center mb-5 fw-bold text-primary">Contactez-nous</h2>
+
+            <div class="card shadow-lg border-0 rounded-4 p-4 bg-light">
+                <p class="mb-4 text-secondary fs-5">
+                    Pour suggérer une référence ou poser une question sur la bibliographie sélective, remplissez ce formulaire.
+                </p>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible fade show custom-flash" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <div class="row g-4 align-items-center">
+                    <!-- Image -->
+                    <div class="col-md-6">
+                        <img src="{{ url_for('static', filename='kerko/images/contact-modern.jpg') }}" alt="Contact" class="img-fluid rounded-4 shadow-sm w-100">
+                    </div>
+
+                    <!-- Form -->
+                    <div class="col-md-6">
+                        <form method="POST" action="{{ url_for('contact') }}">
+                            <div class="mb-3">
+                                <label for="nom" class="form-label fw-semibold">Nom</label>
+                                <input type="text" class="form-control form-control-lg rounded-3" id="nom" name="nom" placeholder="Votre nom complet" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email" class="form-label fw-semibold">Adresse e-mail</label>
+                                <input type="email" class="form-control form-control-lg rounded-3" id="email" name="email" placeholder="nom@exemple.com" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="type_requete" class="form-label fw-semibold">Type de requête</label>
+                                <select class="form-select form-select-lg  shadow-sm rounded-pill px-3 py-2" id="type_requete" name="type_requete" required>
+                                    <option value="" disabled selected>-- Choisissez une option --</option>
+                                    <option value="info">Demande d'information</option>
+                                    <option value="reference">Ajouter une référence</option>
+                                </select>
+                            </div>
+
+                            <!-- Message Section -->
+                            <div id="message_section" class="mb-3" style="display:none;">
+                                <label for="message" class="form-label fw-semibold">Message</label>
+                                <textarea class="form-control form-control-lg rounded-3" id="message" name="message" rows="5" placeholder="Votre message..."></textarea>
+                            </div>
+
+                            <!-- Reference Section -->
+                            <div id="reference_section" style="display:none;">
+                                <div class="mb-3">
+                                    <label for="url" class="form-label fw-semibold">URL</label>
+                                    <input type="url" class="form-control form-control-lg rounded-3" id="url" name="url" placeholder="https://exemple.com/lien">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="auteur" class="form-label fw-semibold">Auteur</label>
+                                    <input type="text" class="form-control form-control-lg rounded-3" id="auteur" name="auteur" placeholder="Nom de l’auteur">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="annee" class="form-label fw-semibold">Année de publication</label>
+                                    <input type="number" class="form-control form-control-lg rounded-3" id="annee" name="annee" placeholder="Ex: 2023" min="1500" max="2100">
+                                </div>
+                            </div>
+
+                            <!-- Captcha -->
+                            <div class="mb-3">
+                                <div class="g-recaptcha" data-sitekey="6LcMnDMrAAAAAJbx22Q8jvgmbOsaVX0CMh4iqLLf" required></div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill mt-3">Envoyer</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Google reCAPTCHA -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<!-- Form Logic -->
+<script>
+document.getElementById('type_requete').addEventListener('change', function() {
+    const type = this.value;
+    const messageField = document.getElementById('message');
+    const urlField = document.getElementById('url');
+    const auteurField = document.getElementById('auteur');
+    const anneeField = document.getElementById('annee');
+
+    const messageSection = document.getElementById('message_section');
+    const referenceSection = document.getElementById('reference_section');
+
+    // Reset requirements
+    messageField.required = false;
+    urlField.required = false;
+    auteurField.required = false;
+    anneeField.required = false;
+
+    if (type === 'info') {
+        messageSection.style.display = 'block';
+        messageField.required = true;
+        referenceSection.style.display = 'none';
+    } else if (type === 'reference') {
+        messageSection.style.display = 'none';
+        referenceSection.style.display = 'block';
+        urlField.required = true;
+        auteurField.required = true;
+        anneeField.required = true;
+    } else {
+        messageSection.style.display = 'none';
+        referenceSection.style.display = 'none';
+    }
+});
+</script>
 {% endblock %}
 

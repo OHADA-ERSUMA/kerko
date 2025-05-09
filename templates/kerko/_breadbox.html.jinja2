@@ -1,7 +1,12 @@
+
 {%- from "kerko/_facets.html.jinja2" import facet -%}
+{%- set has_keywords = breadbox and breadbox.keywords %}
+{%- set has_filters = breadbox and breadbox.filters %}
+{%- set show_reset = is_searching or has_keywords or has_filters %}
 
 {%- if breadbox %}
-    {%- if breadbox.keywords %}
+  
+  {%- if has_keywords %}
         {%- for scope in config.kerko_composer.get_ordered_specs('scopes') %}
             {{- facet(
                     scope.breadbox_label,
@@ -17,16 +22,20 @@
             }}
         {%- endfor %}
     {%- endif %}
-    {%- if breadbox.filters %}
+    {%- if has_filters %}
         {%- for f in config.kerko_composer.get_ordered_specs('facets') %}
             {{ f.render(breadbox.filters[f.key], 'breadbox') }}
         {%- endfor %}
     {%- endif %}
-{%- elif is_searching %}
+{%- elif show_reset %}
     <div class="row">
         <div class="col">
-            {{ _("None of your search criteria could be recognized.") }}
-            <a href="{{ url_for('kerko.search') }}">{{ _("Reset search") }}</a>.
+            <div class="alert alert-warning">
+                {{ _("None of your search criteria could be recognized.") }}
+                <a class="btn btn-outline-secondary btn-sm ml-2" href="{{ url_for('kerko.search') }}">
+                    {{ _("Reset search") }}
+                </a>
+            </div>
         </div>
     </div>
 {%- endif %}
