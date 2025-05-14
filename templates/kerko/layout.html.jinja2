@@ -1,3 +1,4 @@
+
 {% extends config.kerko.templates.base %}
 {% from "kerko/_attributes.html.jinja2" import title_aria_label %}
 {% from "kerko/_breadcrumb.html.jinja2" import breadcrumb %}
@@ -37,7 +38,7 @@
             {%- block header_inner %}
                 {%- block navbar %}
                     
-<nav class="navbar navbar-expand-md sticky-top d-print-none" style="background-color: #37517e;">
+		<nav class="navbar navbar-expand-md sticky-top d-print-none" style="background-color: #37517e;">
 
                         <div class="container">
                             {%- block navbar_brand %}
@@ -72,42 +73,46 @@
 </section>
 
     {%- block main %}
-        <main {% block main_attributes %}class="container mt-5"{% endblock %}>
 
+<main {% block main_attributes %}class="container mt-4"{% endblock %}>
+{#
+            {%- block breadcrumb %}
+                {{ breadcrumb([title]) }}
+            {%- endblock breadcrumb %}
+#}  
           {%- block main_inner %}
                 <div {% block main_inner_attributes %}class="row"{% endblock %}>
- 
-                   {%- block content %}
-			<div {% block content_attributes %}class="col-12 col-lg-8 order-lg-2 mx-auto"{% endblock %}>
-			 
-                        {%- block messages %}
-           
-                            {%- endblock messages %}
-                            {%- block content_inner %}
-                            {%- endblock content_inner %}
 
-                            {%- block content_footer %}
-                            {%- endblock content_footer %}
+                    {%- block content %}
+                        <div {% block content_attributes %}class="col-12 {% if self.sidebar_inner() %}col-lg-8 order-lg-4{% endif %}"{% endblock %}>
 
-                     
-                        </div>
-                    {%- endblock content %}
-
-			{%- block sidebar %}
-
-                        {%- if self.sidebar_inner() %}
-
-<div {% block sidebar_attributes %}class="col-12 col-lg-3 order-lg-1 bg-light rounded shadow-sm p-3"{% endblock %}>
- {%- with messages = get_flashed_messages(with_categories=true) %}
+                            {%- block content_header %}
+                                <div class="row">
+                                    <div class="col">
+                                        <h1 class="{% block content_heading_classes %}h2 my-2{% endblock %}">{{ title|escape }}</h1>
+                                    </div>
+                                </div>
+                            {%- endblock content_header %}
+  
+                          {%- block messages %}
+                                {%- with messages = get_flashed_messages(with_categories=true) %}
                                     {%- for category, message in messages %}
-                                      <div class="alert alert-{{ category }}">
-    <a class="close" {{ title_aria_label(_('Supprimer ce message')) }} href="#"
- data-dismiss="alert">&times;</a>
+                                        <div class="alert alert-{{ category }}">
+                                            <a class="close" {{ title_aria_label(_('Remove this message')) }} href="#" data-dismiss="alert">&times;</a>
                                             {{ message }}
                                         </div>
                                     {%- endfor %}
                                 {%- endwith %}
-
+                            {%- endblock messages %}
+                            {%- block content_inner %}
+                            {%- endblock content_inner %}
+                            {%- block content_footer %}
+                            {%- endblock content_footer %}
+                        </div>
+                    {%- endblock content %}
+                    {%- block sidebar %}
+                        {%- if self.sidebar_inner() %}
+                            <div {% block sidebar_attributes %}class="col-12 col-lg-4 order-lg-1"{% endblock %}>
                                 {%- block sidebar_inner %}
                                 {%- endblock sidebar_inner %}
                             </div>
@@ -116,7 +121,7 @@
                 </div>
             {%- endblock main_inner %}
         </main>
-    {%- endblock main %}
+   {%- endblock main %}
 
     {%- block footer %}
 <footer {% block footer_attributes %} class="text-white pt-5 pb-3" style="background-color: #37517fe6;" {% endblock %}>
@@ -177,3 +182,5 @@
         {%- endif %}
     {%- endblock bootstrap_js %}
 {%- endblock body_scripts %}
+
+

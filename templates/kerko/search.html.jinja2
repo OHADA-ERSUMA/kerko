@@ -45,16 +45,14 @@
                         </button>
                     </div>
                 {%- endif %}
-    
-	{%- if true %}  
-                  <div class="{% block reset_link_wrapper_classes %}d-inline-block d-print-none mt-1 mb-2{% endblock %}">
-                        <a class="{% block reset_btn_classes %}btn btn-danger{% endblock %}" href="{{ url_for('kerko.search') }}">
+                {%- if is_searching %}
+                    <div class="{% block reset_link_wrapper_classes %}d-inline-block d-print-none mt-1 mb-2{% endblock %}">
+                        <a class="{% block reset_btn_classes %}btn{% endblock %}" href="{{ url_for('kerko.search') }}" style="background-color:#7a1f0d; color:white;">
                             <span class="fas fa-trash-alt" aria-hidden="true"></span> {{ _("Reset search") }}
                         </a>
-                    </div>  
-              {%- endif %}
-
-          </div>
+                    </div>
+                {%- endif %}
+            </div>
         {%- endif %}
     </div>
     {%- block search_help %}
@@ -72,10 +70,9 @@
         </div>
     {%- endblock search_criteria %}
     {%- block search_results %}
-
         <div class="my-2 row">
-  
-          {%- if search_results %}
+
+            {%- if search_results %}
                 <div class="{% block sorter_wrapper_classes %}col-auto pl-0 ml-auto mt-1 mb-2 text-right{% endblock %}">
                     <div class="d-inline-block d-print-none">
                         {%- include "kerko/_sorter.html.jinja2" %}
@@ -86,7 +83,6 @@
         {%- if search_results %}
             {%- if pager or config.kerko.features.results_abstracts_toggler %}
                 <div class="row mb-2">
-                   
                     {%- if config.kerko.features.results_abstracts_toggler %}
                         <div class="col-auto ml-auto pl-0">
                             {%- block abstracts_toggler %}
@@ -103,13 +99,9 @@
                     {%- endfor %}
                 </ul>
             {%- endblock search_results_list %}
-		{%- if pager %}
-                        <div class="col-auto mr-auto">
-                            {%- block pager_bottom %}
-                                {%- include "kerko/_pager.html.jinja2" %}
-                            {%- endblock pager_bottom %}
-                        </div>
-                    {%- endif %}
+            {%- block pager_bottom %}
+                {%- include "kerko/_pager.html.jinja2" %}
+            {%- endblock pager_bottom %}
             {%- block search_results_footer scoped %}
                 {%- if show_print_link or show_download_link or atom_feed_url %}
                     <div class="row">
@@ -159,7 +151,7 @@
             {%- endblock search_results_footer %}
         {%- else %}
             {%- block search_suggestions %}
-                <p >{{ _("Suggestions:") }}</p>
+                <p>{{ _("Suggestions:") }}</p>
                 <ul>
                     <li>{{ _("Make sure that all words are spelled correctly.") }}</li>
                     <li>{{ _("Try different words.") }}</li>
